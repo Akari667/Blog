@@ -14,6 +14,9 @@
             <div><a href="/categories/{{$blog->category->slug}}">
                 <span class="badge bg-primary">{{$blog->category->name}}</span></a></div>
             <div class="text-secondary">{{$blog->created_at->diffForHumans()}}</div>
+            <div class="text-secondary">
+                <button class="btn btn-warning">Subscribe</button>
+            </div>
           </div>
           <p class="lh-md mt-3">
             {{$blog->body}}
@@ -24,28 +27,7 @@
     <section class="container">
         <div class="col-md-8 mx-auto">
             @auth
-            <x-card-wrapper>
-                <form action="/blogs/{{$blog->slug}}/comments"
-                      method="POST">
-                    @csrf
-                    <div class="mb-3">
-                        <textarea   name="body"
-                                    cols="10"
-                                    class="form-control border border-0"
-                                    rows="5"
-                                    placeholder="Say something...">
-                        </textarea>
-                        @error('body')
-                            <p class="text-danger">{{$message}}</p>
-                        @enderror
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <button type="submit"
-                            class="btn btn-primary">Submit
-                    </button>
-                    </div>
-                </form>
-                </x-card-wrapper>
+            <x-comment-form :blog="$blog" />
             @else
             <p class="text-center">Please <a href="/login">login</a>to participate in that discussion.</p>
             @endauth
@@ -54,6 +36,5 @@
     @if ($blog->comments()->count())
     <x-comments :comments="$blog->comments"/>
     @endif
-    <x-subcribe/>
     <x-blogs_you_may_like_section :randomBlogs="$randomBlogs" />
 </x-layout>
