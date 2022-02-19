@@ -3,22 +3,22 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class SubscriberMail extends Mailable
+class subscribermailNew extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $blog;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($blog)
+    public function __construct()
     {
-        $this->blog=$blog;
+        //
     }
 
     /**
@@ -28,8 +28,6 @@ class SubscriberMail extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.subscriber_mail',[
-            'blog'=>$this->blog
-        ]);
+        return $this->view('view.name');
     }
 }
